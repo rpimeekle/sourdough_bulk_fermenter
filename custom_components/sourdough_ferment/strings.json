@@ -16,7 +16,7 @@
           "use_humidity_modifier": "Apply humidity modifier (room temp only)"
         },
         "data_description": {
-          "starter_g": "Defaults to 50 g → 10% inoculation at 500 g flour.",
+          "starter_g": "Defaults to 100 g → 20% inoculation at 500 g flour.",
           "protein_pct": "Higher protein lets the dough tolerate a longer bulk; it nudges the target rise rather than the fermentation rate. ~12.5% is typical strong bread flour."
         }
       }
