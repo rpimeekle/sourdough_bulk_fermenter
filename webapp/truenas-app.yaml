@@ -1,0 +1,22 @@
+# TrueNAS SCALE (24.10+): Apps → Discover Apps → ⋮ → Install via YAML.
+# Paste this, change OWNER to the GitHub account that publishes the image,
+# and pick a free host port (30080 below).
+#
+# The container is unprivileged, read-only and needs no storage: each
+# visitor's bake is kept in their own browser.
+services:
+  sourdough-webapp:
+    image: ghcr.io/OWNER/sourdough-webapp:latest
+    restart: unless-stopped
+    ports:
+      - "30080:8080"
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 64M

@@ -1,0 +1,18 @@
+# Run the published image:     docker compose up -d
+# Build from this checkout:    docker compose up -d --build
+#
+# Replace OWNER with the GitHub account that publishes the image
+# (e.g. rpimeekle or bannon52), or build locally.
+services:
+  sourdough-webapp:
+    image: ghcr.io/OWNER/sourdough-webapp:latest
+    build: .
+    container_name: sourdough-webapp
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
