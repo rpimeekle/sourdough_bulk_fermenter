@@ -48,9 +48,10 @@ test("+10 °C halves bulk time at Q10 = 2", () => {
 
 test("recipe figures for the default recipe", () => {
   const f = recipeFigures(DEFAULT_RECIPE);
-  assert.equal(f.starterRatio, 0.1);
-  // 375 g water + 25 g starter water over 500 g flour + 25 g starter flour.
-  assert.ok(Math.abs(f.trueHydrationPct - (400 / 525) * 100) < 1e-12);
+  assert.equal(DEFAULT_RECIPE.starterG, 100);
+  assert.equal(f.starterRatio, 0.2);
+  // 375 g water + 50 g starter water over 500 g flour + 50 g starter flour.
+  assert.ok(Math.abs(f.trueHydrationPct - (425 / 550) * 100) < 1e-12);
 });
 
 test("humidity is ignored for dough-probe readings and when disabled", () => {
