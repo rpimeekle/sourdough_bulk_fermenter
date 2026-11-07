@@ -36,31 +36,44 @@
     <section class="card status" aria-labelledby="status-title">
       <h2 id="status-title" class="visually-hidden">Bulk status</h2>
       <div class="status-grid">
-        <figure class="jar-wrap" aria-hidden="true">
-          <svg class="jar" viewBox="0 0 120 160">
+        <figure class="bowl-wrap" aria-hidden="true">
+          <svg class="bowl" viewBox="0 0 160 124">
             <defs>
-              <clipPath id="jar-inside"><rect x="24" y="22" width="72" height="124" rx="10"/></clipPath>
+              <!-- Inside of the bowl, plus room above the rim for the dough to dome into. -->
+              <clipPath id="bowl-inside">
+                <path d="M10 50 C12 92 40 112 80 112 C120 112 148 92 150 50 A70 7 0 0 0 10 50 Z"/>
+                <rect x="12" y="20" width="136" height="31"/>
+              </clipPath>
             </defs>
-            <rect class="jar-glass" x="24" y="22" width="72" height="124" rx="10"/>
-            <g clip-path="url(#jar-inside)">
+            <ellipse class="bowl-back" cx="80" cy="50" rx="70" ry="7"/>
+            <path class="bowl-glass" d="M10 50 C12 92 40 112 80 112 C120 112 148 92 150 50 A70 7 0 0 0 10 50 Z"/>
+            <g clip-path="url(#bowl-inside)">
               <path class="dough" data-ref="dough" d=""/>
               <g class="bubbles" data-ref="bubbles">
-                <circle cx="42" cy="132" r="2.4"/>
-                <circle cx="70" cy="126" r="1.8"/>
-                <circle cx="55" cy="116" r="3"/>
-                <circle cx="80" cy="138" r="2.2"/>
-                <circle cx="36" cy="110" r="1.6"/>
-                <circle cx="64" cy="100" r="2.6"/>
-                <circle cx="48" cy="90" r="1.8"/>
-                <circle cx="78" cy="84" r="2"/>
+                <circle cx="60" cy="106" r="2.2"/>
+                <circle cx="92" cy="107" r="1.8"/>
+                <circle cx="76" cy="100" r="2.8"/>
+                <circle cx="108" cy="99" r="2"/>
+                <circle cx="48" cy="96" r="1.8"/>
+                <circle cx="120" cy="92" r="2.4"/>
+                <circle cx="66" cy="90" r="2"/>
+                <circle cx="94" cy="86" r="2.6"/>
+                <circle cx="36" cy="84" r="1.6"/>
+                <circle cx="80" cy="78" r="2"/>
+                <circle cx="112" cy="74" r="1.8"/>
+                <circle cx="54" cy="70" r="2.4"/>
+                <circle cx="128" cy="66" r="1.6"/>
+                <circle cx="70" cy="62" r="1.8"/>
+                <circle cx="98" cy="60" r="2.2"/>
               </g>
             </g>
-            <line class="target-line" x1="18" x2="102" y1="62" y2="62"/>
-            <rect class="band" x="21" y="113" width="78" height="5" rx="2.5"/>
-            <rect class="jar-outline" x="24" y="22" width="72" height="124" rx="10"/>
-            <rect class="jar-lip" x="20" y="14" width="80" height="10" rx="4"/>
+            <line class="target-line" x1="14" x2="146" y1="58" y2="58"/>
+            <path class="bowl-outline" d="M10 50 C12 92 40 112 80 112 C120 112 148 92 150 50"/>
+            <path class="bowl-foot" d="M58 111.5 L54 118 H106 L102 111.5"/>
+            <path class="bowl-rim-back" d="M150 50 A70 7 0 0 0 10 50"/>
+            <path class="bowl-rim" d="M10 50 A70 7 0 0 0 150 50"/>
           </svg>
-          <figcaption class="jar-caption" data-ref="caption">Not started</figcaption>
+          <figcaption class="bowl-caption" data-ref="caption">Not started</figcaption>
         </figure>
 
         <div class="status-text">

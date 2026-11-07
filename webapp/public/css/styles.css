@@ -14,7 +14,6 @@
   --bubble: #d9bd8c;
   --glass: rgba(140, 170, 180, 0.12);
   --glass-edge: #b9c3c4;
-  --band: #8a4513;
   --good: #2f7448;
   --good-soft: #e1f0e5;
   --warn: #8a5a0b;
@@ -40,7 +39,6 @@
     --bubble: #b89b6a;
     --glass: rgba(170, 200, 210, 0.07);
     --glass-edge: #5b6566;
-    --band: #e39a52;
     --good: #7fcf98;
     --good-soft: #1f3326;
     --warn: #e9b65c;
@@ -113,20 +111,21 @@ h3 { font-size: 0.95rem; margin: 18px 0 6px; }
 
 /* Status ------------------------------------------------------------------ */
 
-.status-grid { display: grid; grid-template-columns: 132px 1fr; gap: 20px; align-items: center; }
+.status-grid { display: grid; grid-template-columns: 160px 1fr; gap: 20px; align-items: center; }
 
-.jar-wrap { margin: 0; text-align: center; }
-.jar { width: 120px; height: 160px; overflow: visible; }
-.jar-glass { fill: var(--glass); }
-.jar-outline { fill: none; stroke: var(--glass-edge); stroke-width: 2.5; }
-.jar-lip { fill: var(--surface-2); stroke: var(--glass-edge); stroke-width: 2; }
+.bowl-wrap { margin: 0; text-align: center; }
+.bowl { width: 150px; height: 116px; overflow: visible; }
+.bowl-back { fill: var(--surface-2); }
+.bowl-glass { fill: var(--glass); }
+.bowl-outline, .bowl-rim { fill: none; stroke: var(--glass-edge); stroke-width: 2.5; stroke-linecap: round; }
+.bowl-rim-back { fill: none; stroke: var(--glass-edge); stroke-width: 1.5; opacity: 0.7; }
+.bowl-foot { fill: var(--glass); stroke: var(--glass-edge); stroke-width: 2; stroke-linejoin: round; }
 .dough { fill: var(--dough); stroke: var(--dough-edge); stroke-width: 1.5; transition: d 0.8s ease; }
 .bubbles circle { fill: var(--bubble); opacity: 0; transition: opacity 0.6s; }
 .bubbles circle.on { opacity: 1; }
-.band { fill: var(--band); opacity: 0.85; }
 .target-line { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 4 4; opacity: 0.7; }
-.jar.done .dough { fill: var(--dough); stroke: var(--good); stroke-width: 2.5; }
-.jar-caption { font-size: 0.8rem; color: var(--muted); margin-top: 4px; font-variant-numeric: tabular-nums; }
+.bowl.done .dough { stroke: var(--good); stroke-width: 2; }
+.bowl-caption { font-size: 0.8rem; color: var(--muted); margin-top: 4px; font-variant-numeric: tabular-nums; }
 
 .eyebrow { margin: 0; color: var(--muted); font-size: 0.85rem; font-weight: 600; }
 .headline { margin: 4px 0 10px; font-size: 1.7rem; line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }

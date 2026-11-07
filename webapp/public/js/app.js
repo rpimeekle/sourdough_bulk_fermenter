@@ -137,20 +137,23 @@ function lastKnownSentence(r, now) {
   );
 }
 
-// Jar geometry (see index.html): dough starts at the band, target is the dashed line.
-const JAR_START_Y = 113;
-const JAR_TARGET_Y = 62;
+// Bowl geometry (see index.html): the dough starts a third of the way up the
+// bowl and rises to the dashed target line, doming just above the rim at 100%.
+const BOWL_START_Y = 88;
+const BOWL_TARGET_Y = 58;
 
-function drawJar(progress, status) {
+function drawBowl(progress, status) {
   const p = Math.max(0, Math.min(1, progress));
-  const level = JAR_START_Y - p * (JAR_START_Y - JAR_TARGET_Y);
-  const dome = level - 4 - 8 * p;
-  ref.dough.setAttribute("d", `M20 150 L20 ${level + 5} Q60 ${dome} 100 ${level + 5} L100 150 Z`);
+  const level = BOWL_START_Y - p * (BOWL_START_Y - BOWL_TARGET_Y);
+  const edge = level + 8;
+  // The crown grows faster near the end, so the dough clearly domes over the rim at 100%.
+  const crown = level - 10 - 42 * p * p;
+  ref.dough.setAttribute("d", `M0 130 L0 ${edge} Q80 ${crown} 160 ${edge} L160 130 Z`);
   for (const c of ref.bubbles.querySelectorAll("circle")) {
     c.classList.toggle("on", Number(c.getAttribute("cy")) > level + 6);
   }
   ref.bubbles.style.opacity = String(0.3 + 0.6 * p);
-  document.querySelector(".jar").classList.toggle("done", status === "done");
+  document.querySelector(".bowl").classList.toggle("done", status === "done");
 }
 
 function renderStatus(now) {
@@ -216,7 +219,7 @@ function renderStatus(now) {
       break;
   }
 
-  drawJar(result.status === "idle" ? 0 : result.progress, result.status);
+  drawBowl(result.status === "idle" ? 0 : result.progress, result.status);
   maybeNotify(result, now);
   return { result, est };
 }

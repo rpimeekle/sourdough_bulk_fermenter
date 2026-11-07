@@ -7,7 +7,7 @@ temperature, and the countdown updates as soon as they do.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/screenshot-dark.png">
-  <img alt="The status card mid-bake: a jar of rising dough at 43%, '3 h 51 m left', and a note saying it's ready around 16:06 based on the last known temperature of 24.5 °C, updated 1 h 06 m ago." src="docs/screenshot-light.png" width="620">
+  <img alt="The status card mid-bake: a bowl of rising dough at 43%, '3 h 51 m left', and a note saying it's ready around 16:06 based on the last known temperature of 24.5 °C, updated 1 h 06 m ago." src="docs/screenshot-light.png" width="620">
 </picture>
 
 ## What it does
