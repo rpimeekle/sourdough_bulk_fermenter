@@ -24,8 +24,8 @@ Creates two sensors per config entry:
 
 ## Live recipe controls
 
-Setup seeds a default recipe (Zac's standard: **50 g starter, 375 g water,
-500 g flour, 12.5% protein** — i.e. 10% inoculation, 75% hydration). These
+Setup seeds a default recipe (**100 g starter, 375 g water, 500 g flour,
+12.5% protein** — i.e. 20% inoculation, 75% hydration). These
 become four editable **number** entities:
 
 - `number.<name>_starter` (g)
@@ -91,8 +91,8 @@ before the timer has been started).
 ## Total hydration output
 
 `sensor.<name>_total_hydration` reports **true** hydration, including the flour
-and water locked up in your starter. With a 100%-hydration starter, 50 g starter
-adds 25 g flour + 25 g water, so 50 g / 375 g / 500 g reads **76.2%**, not the
+and water locked up in your starter. With a 100%-hydration starter, 100 g starter
+adds 50 g flour + 50 g water, so 100 g / 375 g / 500 g reads **77.3%**, not the
 naive 75%. Set your starter's hydration in Options if it isn't 100% (e.g. a
 stiff 50% starter). The sensor's attributes break down recipe vs starter flour
 and water.

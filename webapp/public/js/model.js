@@ -33,7 +33,7 @@ export const DEFAULT_PARAMS = Object.freeze({
 });
 
 export const DEFAULT_RECIPE = Object.freeze({
-  starterG: 50,
+  starterG: 100,
   flourG: 500,
   waterG: 375,
   proteinPct: 12.5,

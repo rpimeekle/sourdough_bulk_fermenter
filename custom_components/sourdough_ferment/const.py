@@ -49,9 +49,9 @@ CONF_BASE_HOURS = "base_hours"
 # --- Defaults ---------------------------------------------------------------
 DEFAULT_NAME = "Sourdough Bulk"
 
-# Zac's standard bake: 50 g starter, 375 g water, 500 g flour
-#   -> 10% inoculation, 100%-hydration starter, ~76% true hydration.
-DEFAULT_STARTER_G = 50.0
+# Default bake: 100 g starter, 375 g water, 500 g flour
+#   -> 20% inoculation, 100%-hydration starter, ~77% true hydration.
+DEFAULT_STARTER_G = 100.0
 DEFAULT_FLOUR_G = 500.0
 DEFAULT_WATER_G = 375.0
 DEFAULT_PROTEIN = 12.5
