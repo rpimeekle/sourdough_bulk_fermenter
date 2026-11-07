@@ -6,6 +6,11 @@ rate model with starter-ratio scaling.
 
 No YAML required — you pick your sensors from dropdowns during setup.
 
+> **No Home Assistant?** [`webapp/`](webapp/) has a standalone web version
+> of the same calculator that you can self-host (Docker, TrueNAS) or publish
+> free on GitHub Pages. You enter the temperature by hand and the countdown
+> updates. See [webapp/README.md](webapp/README.md).
+
 ## What it does
 
 Creates two sensors per config entry:

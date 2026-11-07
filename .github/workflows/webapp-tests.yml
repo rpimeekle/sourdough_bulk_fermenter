@@ -1,0 +1,34 @@
+name: Web app tests
+
+# Called by the image workflow (which also runs on pull requests) and the
+# Pages workflow, so nothing is published unless the tests pass.
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check model parity with the integration's calc.py
+        run: |
+          python3 webapp/tests/generate_fixtures.py
+          git diff --exit-code -- webapp/tests/fixtures.json || {
+            echo "::error::calc.py and model.js fixtures are out of date. Run: python3 webapp/tests/generate_fixtures.py"
+            exit 1
+          }
+
+      - name: Unit tests
+        run: node --test webapp/tests/*.test.mjs

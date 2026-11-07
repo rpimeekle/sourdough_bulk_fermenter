@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.open-meteo.com; manifest-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Bulk Ferment Timer</title>
+  <meta name="description" content="Estimate how long your sourdough's bulk fermentation has left, from the temperature you enter.">
+  <meta name="theme-color" content="#f7f3ec" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1a1714" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="top">
+    <div class="brand">
+      <img src="icons/icon.svg" alt="" width="32" height="32">
+      <div>
+        <h1>Bulk Ferment Timer</h1>
+        <p class="tagline">A sourdough bulk fermentation calculator</p>
+      </div>
+    </div>
+    <div class="unit-toggle" role="group" aria-label="Temperature unit">
+      <button type="button" data-unit="C" aria-pressed="true">°C</button>
+      <button type="button" data-unit="F" aria-pressed="false">°F</button>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Status -->
+    <section class="card status" aria-labelledby="status-title">
+      <h2 id="status-title" class="visually-hidden">Bulk status</h2>
+      <div class="status-grid">
+        <figure class="bowl-wrap" aria-hidden="true">
+          <svg class="bowl" viewBox="0 0 160 124">
+            <defs>
+              <!-- Inside of the bowl, plus room above the rim for the dough to dome into. -->
+              <clipPath id="bowl-inside">
+                <path d="M10 50 C12 92 40 112 80 112 C120 112 148 92 150 50 A70 7 0 0 0 10 50 Z"/>
+                <rect x="12" y="20" width="136" height="31"/>
+              </clipPath>
+            </defs>
+            <ellipse class="bowl-back" cx="80" cy="50" rx="70" ry="7"/>
+            <path class="bowl-glass" d="M10 50 C12 92 40 112 80 112 C120 112 148 92 150 50 A70 7 0 0 0 10 50 Z"/>
+            <g clip-path="url(#bowl-inside)">
+              <path class="dough" data-ref="dough" d=""/>
+              <g class="bubbles" data-ref="bubbles">
+                <circle cx="60" cy="106" r="2.2"/>
+                <circle cx="92" cy="107" r="1.8"/>
+                <circle cx="76" cy="100" r="2.8"/>
+                <circle cx="108" cy="99" r="2"/>
+                <circle cx="48" cy="96" r="1.8"/>
+                <circle cx="120" cy="92" r="2.4"/>
+                <circle cx="66" cy="90" r="2"/>
+                <circle cx="94" cy="86" r="2.6"/>
+                <circle cx="36" cy="84" r="1.6"/>
+                <circle cx="80" cy="78" r="2"/>
+                <circle cx="112" cy="74" r="1.8"/>
+                <circle cx="54" cy="70" r="2.4"/>
+                <circle cx="128" cy="66" r="1.6"/>
+                <circle cx="70" cy="62" r="1.8"/>
+                <circle cx="98" cy="60" r="2.2"/>
+              </g>
+            </g>
+            <line class="target-line" x1="14" x2="146" y1="58" y2="58"/>
+            <path class="bowl-outline" d="M10 50 C12 92 40 112 80 112 C120 112 148 92 150 50"/>
+            <path class="bowl-foot" d="M58 111.5 L54 118 H106 L102 111.5"/>
+            <path class="bowl-rim-back" d="M150 50 A70 7 0 0 0 10 50"/>
+            <path class="bowl-rim" d="M10 50 A70 7 0 0 0 150 50"/>
+          </svg>
+          <figcaption class="bowl-caption" data-ref="caption">Not started</figcaption>
+        </figure>
+
+        <div class="status-text">
+          <p class="eyebrow" data-ref="eyebrow">Ready when you are</p>
+          <p class="headline" data-ref="headline">Enter a temperature to get an estimate</p>
+          <div class="progress" data-ref="progressWrap" hidden>
+            <div class="progress-bar" role="progressbar" aria-label="Bulk progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-ref="progressBar">
+              <span data-ref="progressFill"></span>
+            </div>
+          </div>
+          <p class="note" data-ref="note" aria-live="polite"></p>
+          <p class="hint stale" data-ref="stale" hidden></p>
+          <div class="actions">
+            <button type="button" class="btn primary" data-ref="startBtn">Start bulk</button>
+            <button type="button" class="btn" data-ref="resetBtn" hidden>Reset</button>
+          </div>
+          <details class="start-adjust" data-ref="startAdjust" hidden>
+            <summary>Started earlier?</summary>
+            <form data-ref="startForm" class="inline-form">
+              <label for="start-at">Bulk started at</label>
+              <input type="datetime-local" id="start-at" data-ref="startAt" required>
+              <button type="submit" class="btn small">Set start time</button>
+            </form>
+          </details>
+        </div>
+      </div>
+
+      <div class="complete" data-ref="complete" hidden>
+        <p class="complete-title">Bulk ferment complete</p>
+        <p class="complete-detail" data-ref="completeDetail"></p>
+        <p class="complete-tip">Check the dough before shaping: domed, jiggly, with bubbles along the sides. Look at the dough, not just the clock.</p>
+        <button type="button" class="btn primary" data-ref="newBakeBtn">Start a new bake</button>
+      </div>
+    </section>
+
+    <!-- Temperature -->
+    <section class="card" aria-labelledby="temp-title">
+      <h2 id="temp-title">Temperature</h2>
+      <p class="hint">Enter a new reading whenever the temperature changes. Each reading counts from when you enter it until the next one, and the estimate updates straight away.</p>
+      <form class="temp-form" data-ref="tempForm" novalidate>
+        <div class="field">
+          <label for="temp-input">Temperature</label>
+          <div class="with-suffix">
+            <input id="temp-input" data-ref="tempInput" type="number" inputmode="decimal" step="0.1" required>
+            <span class="suffix" data-ref="tempSuffix">°C</span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="temp-kind">Measured</label>
+          <select id="temp-kind" data-ref="tempKind">
+            <option value="room">Room air</option>
+            <option value="dough">Dough (probe)</option>
+          </select>
+        </div>
+        <div class="field" data-ref="humidityField">
+          <label for="humidity-input">Humidity <span class="optional">optional</span></label>
+          <div class="with-suffix">
+            <input id="humidity-input" data-ref="humidityInput" type="number" inputmode="decimal" min="0" max="100" step="1">
+            <span class="suffix">%</span>
+          </div>
+        </div>
+        <button type="submit" class="btn primary">Update temperature</button>
+      </form>
+      <p class="error" data-ref="tempError" role="alert" hidden></p>
+
+      <div class="outdoor" data-ref="outdoor">
+        <div data-ref="outdoorOff">
+          <button type="button" class="btn link" data-ref="outdoorEnable">Suggest the outdoor temperature near me</button>
+        </div>
+        <div data-ref="outdoorOn" hidden>
+          <p class="outdoor-line" data-ref="outdoorLine">Checking the temperature outside…</p>
+          <p class="hint">Outdoor temperature is often quite different from your kitchen. Use it as a rough guide only.</p>
+          <div class="actions">
+            <button type="button" class="btn small" data-ref="outdoorUse" hidden>Use this</button>
+            <button type="button" class="btn small ghost" data-ref="outdoorRefresh">Refresh</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="log" data-ref="logWrap" hidden>
+        <h3>Readings</h3>
+        <ol class="log-list" data-ref="logList" reversed></ol>
+      </div>
+    </section>
+
+    <!-- Recipe -->
+    <section class="card" aria-labelledby="recipe-title">
+      <h2 id="recipe-title">Recipe</h2>
+      <form class="recipe-form" data-ref="recipeForm">
+        <div class="field">
+          <label for="starter-g">Starter</label>
+          <div class="with-suffix"><input id="starter-g" name="starterG" type="number" min="0" max="2000" step="1" inputmode="decimal"><span class="suffix">g</span></div>
+        </div>
+        <div class="field">
+          <label for="flour-g">Flour</label>
+          <div class="with-suffix"><input id="flour-g" name="flourG" type="number" min="1" max="10000" step="5" inputmode="decimal"><span class="suffix">g</span></div>
+        </div>
+        <div class="field">
+          <label for="water-g">Water</label>
+          <div class="with-suffix"><input id="water-g" name="waterG" type="number" min="0" max="10000" step="5" inputmode="decimal"><span class="suffix">g</span></div>
+        </div>
+        <div class="field">
+          <label for="protein">Flour protein</label>
+          <div class="with-suffix"><input id="protein" name="proteinPct" type="number" min="7" max="16" step="0.1" inputmode="decimal"><span class="suffix">%</span></div>
+        </div>
+        <div class="field">
+          <label for="starter-hyd">Starter hydration</label>
+          <div class="with-suffix"><input id="starter-hyd" name="starterHydrationPct" type="number" min="50" max="150" step="5" inputmode="decimal"><span class="suffix">%</span></div>
+        </div>
+      </form>
+      <dl class="figures">
+        <div><dt>Inoculation</dt><dd data-ref="figInoc">–</dd></div>
+        <div><dt>Total hydration</dt><dd data-ref="figHyd">–</dd></div>
+        <div><dt>Bulk at this temperature</dt><dd data-ref="figBulk">–</dd></div>
+      </dl>
+      <button type="button" class="btn link" data-ref="recipeReset">Reset to default recipe</button>
+    </section>
+
+    <!-- Settings -->
+    <section class="card">
+      <details class="settings">
+        <summary><h2>Settings</h2></summary>
+        <form class="settings-form" data-ref="settingsForm">
+          <div class="field">
+            <label for="q10">Q10 <span class="optional">rate × per +10 °C</span></label>
+            <input id="q10" name="q10" type="number" min="1.5" max="3.5" step="0.1" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label for="ref-temp">Reference temperature</label>
+            <div class="with-suffix"><input id="ref-temp" name="refTemp" type="number" min="15" max="30" step="0.5" inputmode="decimal"><span class="suffix">°C</span></div>
+          </div>
+          <div class="field">
+            <label for="base-hours">Base bulk time <span class="optional">at reference, 20% starter</span></label>
+            <div class="with-suffix"><input id="base-hours" name="baseHours" type="number" min="1" max="24" step="0.25" inputmode="decimal"><span class="suffix">h</span></div>
+          </div>
+          <div class="field">
+            <label for="lead-min">Heads-up before done</label>
+            <div class="with-suffix"><input id="lead-min" name="headsUpMin" type="number" min="0" max="120" step="5" inputmode="numeric"><span class="suffix">min</span></div>
+          </div>
+          <label class="check"><input type="checkbox" name="useHumidity"> Adjust for room humidity</label>
+        </form>
+        <div class="notify-row">
+          <button type="button" class="btn small" data-ref="notifyBtn">Turn on notifications</button>
+          <p class="hint" data-ref="notifyHint">Notifications only arrive while this page is open in a tab.</p>
+        </div>
+        <button type="button" class="btn link" data-ref="settingsReset">Reset model settings</button>
+      </details>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>Estimates use a Q10 temperature model with starter, hydration and protein adjustments, ported from the <a href="https://github.com/bannon52/sourdough_bulk_fermenter" rel="noopener">sourdough_ferment</a> Home Assistant integration. Treat them as a guide, and judge by the dough.</p>
+    <p>Your bake is saved only in this browser. <button type="button" class="btn link" data-ref="privacyBtn">Privacy &amp; location settings</button></p>
+  </footer>
+
+  <div class="consent" data-ref="consent" role="dialog" aria-labelledby="consent-title" aria-describedby="consent-body" hidden>
+    <p id="consent-title" class="consent-title">Your data stays on this device</p>
+    <p id="consent-body">This calculator saves your bake and recipe in your browser's storage so the countdown survives a refresh. Nothing is sent to this site's server and there are no tracking cookies. If you allow it, it can also use your approximate location to suggest the temperature outside, fetched from Open-Meteo.</p>
+    <div class="actions">
+      <button type="button" class="btn primary" data-ref="consentAllow">Allow location</button>
+      <button type="button" class="btn" data-ref="consentDeny">No location</button>
+      <button type="button" class="btn link" data-ref="consentForget">Forget my data</button>
+    </div>
+  </div>
+</body>
+</html>
